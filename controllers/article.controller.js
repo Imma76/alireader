@@ -55,7 +55,10 @@ class ArticleController {
   async getComments(req, res) {
     const { id } = req.body;
     const getAllComments = await articleService.getAllComments(id);
-    console.log(getAllComments);
+    if (getAllComments === null) {
+      return res.status(404).send({ message: false, body: 'invalid article id to get comment' });
+    }
+    return res.status(200).send({ message: true, body: getAllComments.comments });
   }
 
   async addComment(req, res) {
@@ -64,7 +67,7 @@ class ArticleController {
     const comments  = getAllComments.comments;
     comments.push({ usercomment: comment, userId: user_id });
     // const newComment = { comments: { commentList }, id };
-    const add = await articleService.addComment({ comments }, article_id);
+    await articleService.addComment({ comments }, article_id);
     return res.status(201).send({ message: true, body: 'comment posted successfully' });
   }
 }
