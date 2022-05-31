@@ -14,13 +14,27 @@ class ValidatorSchema {
 
   createArticleSchema = Joi.object({
     title: Joi.string().required(),
-    body: Joi.string().required(),
-    authorName: Joi.string().required()
+    description: Joi.string().required(),
+    author: Joi.string().required(),
+    user_id: Joi.string().required()
   });
 
   getArticleByNameSchema = Joi.object({ title: Joi.string().required() });
 
   deleteArticleSchema = Joi.object({ id: Joi.string().required() });
+
+  editArticleSchema = Joi.object({
+    id: Joi.string().required(),
+    title: Joi.string(),
+    description: Joi.string(),
+    
+  });
+
+  addCommentSchema = Joi.object({
+    user_id: Joi.string().required(),
+    comment: Joi.string().required(),
+    article_id: Joi.string().required()
+  });
 }
 
 export default new ValidatorSchema();
