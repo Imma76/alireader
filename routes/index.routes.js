@@ -7,4 +7,11 @@ const route = express();
 route.use('/articles', articleRoute);
 route.use('/user', userRouter);
 
+route.use('*', (req, res) => {
+  res.status(200).send({
+    success: true,
+    message: 'The server is currently up and running'
+  });
+});
+
 export default route;
