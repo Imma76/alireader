@@ -1,14 +1,11 @@
 /* eslint-disable class-methods-use-this */
 import bycrypt from 'bcrypt';
 import Jwt from 'jsonwebtoken';
-import validator from '../validators/validator.js';
-import validatorSchema from '../validators/validator.schema.js';
 import userService from '../services/user.services.js';
 
 class UserController {
   async createUser(req, res) {
     const { email, fullname, password } = req.body;
-    await validator(validatorSchema.createUserSchema, req.body);
     const data = { email, password: bycrypt.hashSync(password, 8), fullname };
 
     await userService.createUserService(data);
@@ -17,9 +14,9 @@ class UserController {
 
   async loginUser(req, res) {
     const { email, password } = req.body;
-      await validator(validatorSchema.loginUserSchema, req.body);
+
     //   await userService.loginUserService(email)
-     userService.loginUserService(email).exec((err, user) => {
+    userService.loginUserService(email).exec((err, user) => {
       if (err) {
         return res.status(500).send({ message: false, body: err.message });
       }
