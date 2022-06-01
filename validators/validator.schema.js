@@ -26,7 +26,7 @@ class ValidatorSchema {
   editArticleSchema = Joi.object({
     id: Joi.string().required(),
     title: Joi.string(),
-    description: Joi.string(),
+    description: Joi.string()
     
   });
 

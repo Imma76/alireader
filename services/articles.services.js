@@ -24,25 +24,11 @@ const editArticle = async (data) => {
   const edit = await articleModel.updateOne({ _id: data.id }, _data, { runValidators: true });
   return edit;
 };
-const getAllComments = async (id) => {
-  const allComments = await articleModel.findById(id);
-  return allComments;
-};
 
-const addComment = async (data, articleId) => {
-  const add = await articleModel.updateOne(
-    { _id: articleId },
-    data,
-    { runValidators: true }
-  );
-  return add;
-};
 export default {
   createArticle,
   getAllArticles,
   getArticleByName,
   deleteArticleById,
-  editArticle,
-  addComment,
-  getAllComments
+  editArticle
 };

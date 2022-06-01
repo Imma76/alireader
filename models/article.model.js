@@ -14,9 +14,6 @@ const articleSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  comments: {
-    type: Array
-  },
   user_id: {
     type: String,
     required: true

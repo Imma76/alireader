@@ -52,23 +52,6 @@ class ArticleController {
     return res.status(200).send({ message: true, body: 'article deleted successfully' });
   }
 
-  async getComments(req, res) {
-    const { id } = req.body;
-    const getAllComments = await articleService.getAllComments(id);
-    if (getAllComments === null) {
-      return res.status(404).send({ message: false, body: 'invalid article id to get comment' });
-    }
-    return res.status(200).send({ message: true, body: getAllComments.comments });
-  }
-
-  async addComment(req, res) {
-    const { comment, user_id, article_id } = req.body;
-    const getAllComments = await articleService.getAllComments(article_id);
-    const comments  = getAllComments.comments;
-    comments.push({ usercomment: comment, userId: user_id });
-    // const newComment = { comments: { commentList }, id };
-    await articleService.addComment({ comments }, article_id);
-    return res.status(201).send({ message: true, body: 'comment posted successfully' });
-  }
+ 
 }
 export default new ArticleController();

@@ -12,23 +12,41 @@ class UserController {
     return res.status(201).send({ message: true, body: 'user created successfully' });
   }
 
+  // async loginUser(req, res) {
+  //   const { email, password } = req.body;
+
+  //   //   await userService.loginUserService(email)
+  //   userService.loginUserService(email).exec((err, user) => {
+  //     if (err) {
+  //       return res.status(500).send({ message: false, body: err.message });
+  //     }
+  //     if (!user) {
+  //       return res.status(404).send({ message: false, body: 'user does not exist' });
+  //     }
+  //     const userIsValidated = bycrypt.compareSync(password, user.password);
+  //     if (!userIsValidated) {
+  //       return res.status(404).send({ message: false, body: 'password is invalid' });
+  //     }
+  //     const token = Jwt.sign({ id: user.id }, process.env.API_SECRET, ({ expiresIn: 5000 }));
+  //     return res.status(200).send({ message: true, body: { message: 'user logged in successful',
+  // user: { email: user.email, fullname: user.fullname }
+  // }, token });
+  //   });
+  // }
   async loginUser(req, res) {
     const { email, password } = req.body;
-
-    //   await userService.loginUserService(email)
-    userService.loginUserService(email).exec((err, user) => {
+    await userService.loginUserService(email).exec((err, user) => {
       if (err) {
-        return res.status(500).send({ message: false, body: err.message });
+        return res.status(500).send({ message: true, body: err.message });
       }
       if (!user) {
         return res.status(404).send({ message: false, body: 'user does not exist' });
       }
-      const userIsValidated = bycrypt.compareSync(password, user.password);
-      if (!userIsValidated) {
-        return res.status(404).send({ message: false, body: 'password is invalid' });
+      const validateUser = bycrypt.compareSync(user.password, password);
+      if (!validateUser) {
+        return res.status(401).send({ message: false, body: 'invalid password' });
       }
-      const token = Jwt.sign({ id: user.id }, process.env.API_SECRET, ({ expiresIn: 5000 }));
-      return res.status(200).send({ message: true, body: { message: 'user logged in successful', user: { email: user.email, fullname: user.fullname } }, token });
+      const token = Jwt.sign({ id: user.id }, process.env.API_SECRET, ({ expiresIn: 4000 }));
     });
   }
 }
