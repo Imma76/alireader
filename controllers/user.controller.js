@@ -1,5 +1,5 @@
 /* eslint-disable class-methods-use-this */
-import bycrypt from 'bcrypt';
+import bycrypt from 'bcryptjs';
 import Jwt from 'jsonwebtoken';
 import userService from '../services/user.services.js';
 
@@ -47,6 +47,7 @@ class UserController {
         return res.status(401).send({ message: false, body: 'invalid password' });
       }
       const token = Jwt.sign({ id: user.id }, process.env.API_SECRET, ({ expiresIn: 4000 }));
+      return res.status.send({ message: true, body: { message: 'log in successful', user: { email: user.email, fullname: user.fullname,token: token } } });
     });
   }
 }

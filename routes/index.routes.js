@@ -6,6 +6,9 @@ const route = express();
 
 route.use('/articles', articleRoute);
 route.use('/user', userRouter);
+route.get('/docs', (req, res) => {
+  res.redirect('https://documenter.getpostman.com/view/17577991/Uz5FHvhD');
+});
 
 route.use('*', (req, res) => {
   res.status(200).send({
